@@ -132,14 +132,19 @@ recv_socket = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.ntohs(0x08
 
 
 while True:
+    print("<<<<<<<<<Packet_Capture_Start>>>>>>>>>")
+    print("")
+    
     data = recv_socket.recvfrom(20000)
-    # print(data)
-    # print(data[0][0:14])
-    # print(data[0][14:18])
+    
     parsing_ethernet_header(data[0][0:14])
+    
     protocol_id = parsing_ip_header(data[0][14:34])
-    # print(protocol_id)
+    
     if(protocol_id == 6):
         parsing_tcp_header(data[0][34:54])
     elif(protocol_id == 17):
         parsing_udp_header(data[0][34:42])
+    
+    print("")
+    print("<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>")
